@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | CoursePath AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="{{ url_for('home') }}" class="brand">
+        <span class="brand-icon">🎓</span>
+        CoursePath AI
+    </a>
+
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('profile') }}">Profile</a>
+        <a href="{{ url_for('history') }}">History</a>
+        <a href="{{ url_for('recommend') }}">Recommend</a>
+        <a href="{{ url_for('logout') }}" class="nav-button">Logout</a>
+    </div>
+</nav>
+
+<main class="form-page">
+
+    <div class="page-heading">
+        <span>STUDENT PROFILE</span>
+        <h1>Tell us about yourself</h1>
+        <p>
+            Your profile helps us understand your interests and career goals.
+        </p>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-container">
+                {% for message in messages %}
+                    <div class="flash-message">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" class="form-card">
+
+        <div class="form-card-header">
+            <div class="card-icon">👤</div>
+            <div>
+                <h2>Personal Information</h2>
+                <p>Keep your information updated.</p>
+            </div>
+        </div>
+
+        <div class="form-row">
+
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value="{{ user.name or '' }}"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    value="{{ user.email }}"
+                    disabled
+                >
+                <small>Email cannot be changed here.</small>
+            </div>
+
+        </div>
+
+        <div class="form-row">
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value="{{ user.phone or '' }}"
+                    placeholder="Enter phone number"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="stream">XII Stream</label>
+                <select id="stream" name="stream">
+                    <option value="">Select your stream</option>
+                    <option value="Science"
+                        {% if user.stream == "Science" %}selected{% endif %}>
+                        Science
+                    </option>
+                    <option value="Commerce"
+                        {% if user.stream == "Commerce" %}selected{% endif %}>
+                        Commerce
+                    </option>
+                    <option value="Arts"
+                        {% if user.stream == "Arts" %}selected{% endif %}>
+                        Arts
+                    </option>
+                    <option value="Vocational"
+                        {% if user.stream == "Vocational" %}selected{% endif %}>
+                        Vocational
+                    </option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label for="interests">Your Interests</label>
+            <input
+                type="text"
+                id="interests"
+                name="interests"
+                value="{{ user.interests or '' }}"
+                placeholder="Example: Coding, design, business, medicine"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="career_goal">Career Goal</label>
+            <textarea
+                id="career_goal"
+                name="career_goal"
+                rows="4"
+                placeholder="Describe your future career goal"
+            >{{ user.career_goal or '' }}</textarea>
+        </div>
+
+        <button type="submit" class="full-button">
+            Save Profile →
+        </button>
+
+    </form>
+
+</main>
+
+<footer class="footer">
+    <p>© 2026 CoursePath AI. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

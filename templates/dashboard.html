@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | CoursePath AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="{{ url_for('home') }}" class="brand">
+        <span class="brand-icon">🎓</span>
+        CoursePath AI
+    </a>
+
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('profile') }}">Profile</a>
+        <a href="{{ url_for('history') }}">History</a>
+        <a href="{{ url_for('recommend') }}">Recommend</a>
+        <a href="{{ url_for('logout') }}" class="nav-button">Logout</a>
+    </div>
+</nav>
+
+<main class="dashboard-page">
+
+    <section class="dashboard-header">
+        <div>
+            <p class="welcome-label">WELCOME BACK 👋</p>
+            <h1>Hello, {{ user.name }}</h1>
+            <p>
+                Discover courses that match your academic profile,
+                interests, and career goals.
+            </p>
+        </div>
+
+        <a href="{{ url_for('recommend') }}" class="primary-button">
+            Get Recommendation →
+        </a>
+    </section>
+
+    <section class="dashboard-grid">
+
+        <div class="dashboard-card highlight-card">
+            <div class="card-icon">🧠</div>
+            <h3>AI Course Recommendation</h3>
+            <p>
+                Analyze your XII marks and interests to find a suitable
+                course for your future.
+            </p>
+            <a href="{{ url_for('recommend') }}" class="card-link">
+                Start Assessment →
+            </a>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon">👤</div>
+            <h3>Student Profile</h3>
+            <p>
+                Add your stream, interests, phone number, and career goals.
+            </p>
+            <a href="{{ url_for('profile') }}" class="card-link">
+                Update Profile →
+            </a>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon">📚</div>
+            <h3>Recommendation History</h3>
+            <p>
+                View your previous course recommendations and assessments.
+            </p>
+            <a href="{{ url_for('history') }}" class="card-link">
+                View History →
+            </a>
+        </div>
+
+    </section>
+
+    <section class="dashboard-info">
+
+        <div class="section-heading left-heading">
+            <span>RECENT ACTIVITY</span>
+            <h2>Your Recent Recommendations</h2>
+        </div>
+
+        {% if recent_recommendations %}
+
+            <div class="history-list">
+
+                {% for item in recent_recommendations %}
+
+                    <div class="history-item">
+
+                        <div class="history-icon">🎯</div>
+
+                        <div class="history-content">
+                            <h3>{{ item.predicted_course }}</h3>
+                            <p>
+                                Stream: {{ item.stream or "Not specified" }}
+                                |
+                                Interest: {{ item.interest or "Not specified" }}
+                            </p>
+                        </div>
+
+                        <div class="history-date">
+                            {{ item.created_at.strftime('%d %b %Y') }}
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+                <div class="empty-icon">📋</div>
+                <h3>No recommendations yet</h3>
+                <p>
+                    Complete your first assessment to see your results here.
+                </p>
+                <a href="{{ url_for('recommend') }}" class="primary-button">
+                    Start Now
+                </a>
+            </div>
+
+        {% endif %}
+
+    </section>
+
+</main>
+
+<footer class="footer">
+    <p>© 2026 CoursePath AI. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

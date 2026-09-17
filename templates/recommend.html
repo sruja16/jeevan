@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Recommendation | CoursePath AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="{{ url_for('home') }}" class="brand">
+        <span class="brand-icon">🎓</span>
+        CoursePath AI
+    </a>
+
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('profile') }}">Profile</a>
+        <a href="{{ url_for('history') }}">History</a>
+        <a href="{{ url_for('recommend') }}">Recommend</a>
+        <a href="{{ url_for('logout') }}" class="nav-button">Logout</a>
+    </div>
+</nav>
+
+<main class="form-page">
+
+    <div class="page-heading">
+        <span>AI ASSESSMENT</span>
+        <h1>Find your ideal course</h1>
+        <p>
+            Enter your XII stream, interests, and subject marks.
+            Our model will generate a personalized recommendation.
+        </p>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-container">
+                {% for message in messages %}
+                    <div class="flash-message">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" class="form-card">
+
+        <div class="form-card-header">
+            <div class="card-icon">🎯</div>
+            <div>
+                <h2>Academic Assessment</h2>
+                <p>Provide your latest academic information.</p>
+            </div>
+        </div>
+
+        <div class="form-row">
+
+            <div class="form-group">
+                <label for="stream">XII Stream</label>
+                <select id="stream" name="stream" required>
+                    <option value="">Select stream</option>
+                    <option value="Science">Science</option>
+                    <option value="Commerce">Commerce</option>
+                    <option value="Arts">Arts</option>
+                    <option value="Vocational">Vocational</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="interest">Main Interest</label>
+                <select id="interest" name="interest" required>
+                    <option value="">Select interest</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Science">Science</option>
+                    <option value="Business">Business</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Arts">Arts</option>
+                    <option value="Design">Design</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Law">Law</option>
+                    <option value="Social Science">Social Science</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="form-section-title">
+            <h3>Subject Marks</h3>
+            <p>Enter marks out of 100. Leave unavailable subjects as 0.</p>
+        </div>
+
+        <div class="marks-grid">
+
+            <div class="form-group">
+                <label for="maths">Mathematics</label>
+                <input type="number" id="maths" name="maths"
+                       min="0" max="100" step="0.01" value="0">
+            </div>
+
+            <div class="form-group">
+                <label for="physics">Physics</label>
+                <input type="number" id="physics" name="physics"
+                       min="0" max="100" step="0.01" value="0">
+            </div>
+
+            <div class="form-group">
+                <label for="chemistry">Chemistry</label>
+                <input type="number" id="chemistry" name="chemistry"
+                       min="0" max="100" step="0.01" value="0">
+            </div>
+
+            <div class="form-group">
+                <label for="biology">Biology</label>
+                <input type="number" id="biology" name="biology"
+                       min="0" max="100" step="0.01" value="0">
+            </div>
+
+            <div class="form-group">
+                <label for="computer_science">Computer Science</label>
+                <input type="number" id="computer_science"
+                       name="computer_science"
+                       min="0" max="100" step="0.01" value="0">
+            </div>
+
+            <div class="form-group">
+                <label for="accountancy">Accountancy</label>
+                <input type="number" id="accountancy"
+                       name="accountancy"
+                       min="0" max="100" step="0.01" value="0">
+            </div>
+
+            <div class="form-group">
+                <label for="economics">Economics</label>
+                <input type="number" id="economics" name="economics"
+                       min="0" max="100" step="0.01" value="0">
+            </div>
+
+            <div class="form-group">
+                <label for="english">English</label>
+                <input type="number" id="english" name="english"
+                       min="0" max="100" step="0.01" value="0">
+            </div>
+
+        </div>
+
+        <div class="assessment-note">
+            <span>💡</span>
+            <p>
+                Your recommendation is generated using the academic and
+                interest information entered above.
+            </p>
+        </div>
+
+        <button type="submit" class="full-button">
+            Generate Recommendation ✨
+        </button>
+
+    </form>
+
+</main>
+
+<footer class="footer">
+    <p>© 2026 CoursePath AI. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

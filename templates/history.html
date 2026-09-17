@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendation History | CoursePath AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="{{ url_for('home') }}" class="brand">
+        <span class="brand-icon">🎓</span>
+        CoursePath AI
+    </a>
+
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('profile') }}">Profile</a>
+        <a href="{{ url_for('history') }}">History</a>
+        <a href="{{ url_for('recommend') }}">Recommend</a>
+        <a href="{{ url_for('logout') }}" class="nav-button">Logout</a>
+    </div>
+</nav>
+
+<main class="history-page">
+
+    <div class="page-heading">
+        <span>YOUR ACTIVITY</span>
+        <h1>Recommendation History</h1>
+        <p>
+            Review the course recommendations you generated earlier.
+        </p>
+    </div>
+
+    {% if recommendations %}
+
+        <div class="history-table-wrapper">
+
+            <table class="history-table">
+
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Recommended Course</th>
+                        <th>Stream</th>
+                        <th>Interest</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for item in recommendations %}
+
+                        <tr>
+                            <td>{{ loop.index }}</td>
+
+                            <td>
+                                <strong>
+                                    {{ item.predicted_course }}
+                                </strong>
+                            </td>
+
+                            <td>
+                                {{ item.stream or "Not specified" }}
+                            </td>
+
+                            <td>
+                                {{ item.interest or "Not specified" }}
+                            </td>
+
+                            <td>
+                                {{ item.created_at.strftime('%d %b %Y, %I:%M %p') }}
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+            <div class="empty-icon">📋</div>
+            <h3>No recommendation history</h3>
+            <p>
+                Your generated recommendations will appear here.
+            </p>
+
+            <a href="{{ url_for('recommend') }}" class="primary-button">
+                Generate Recommendation
+            </a>
+        </div>
+
+    {% endif %}
+
+</main>
+
+<footer class="footer">
+    <p>© 2026 CoursePath AI. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

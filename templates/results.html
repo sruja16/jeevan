@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendation Results | CoursePath AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="{{ url_for('home') }}" class="brand">
+        <span class="brand-icon">🎓</span>
+        CoursePath AI
+    </a>
+
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('profile') }}">Profile</a>
+        <a href="{{ url_for('history') }}">History</a>
+        <a href="{{ url_for('recommend') }}">Recommend</a>
+        <a href="{{ url_for('logout') }}" class="nav-button">Logout</a>
+    </div>
+</nav>
+
+<main class="results-page">
+
+    <div class="page-heading">
+        <span>YOUR AI RESULT</span>
+        <h1>Your recommended course</h1>
+        <p>
+            Based on the academic and interest information you provided.
+        </p>
+    </div>
+
+    <section class="result-main-card">
+
+        <div class="result-icon">🎯</div>
+
+        <div class="result-label">RECOMMENDED COURSE</div>
+
+        <h2>{{ predicted_course }}</h2>
+
+        <p>
+            This course was selected by the machine learning model
+            based on your assessment details.
+        </p>
+
+        <div class="result-tags">
+            <span>Stream: {{ stream }}</span>
+            <span>Interest: {{ interest }}</span>
+        </div>
+
+    </section>
+
+    <section class="details-grid">
+
+        <div class="detail-card">
+            <div class="detail-icon">📖</div>
+            <h3>About the Course</h3>
+            <p>{{ description }}</p>
+        </div>
+
+        <div class="detail-card">
+            <div class="detail-icon">🎓</div>
+            <h3>Eligibility</h3>
+            <p>{{ eligibility }}</p>
+        </div>
+
+        <div class="detail-card">
+            <div class="detail-icon">⏳</div>
+            <h3>Course Duration</h3>
+            <p>{{ duration }}</p>
+        </div>
+
+        <div class="detail-card">
+            <div class="detail-icon">🛠️</div>
+            <h3>Required Skills</h3>
+            <p>{{ skills }}</p>
+        </div>
+
+        <div class="detail-card wide-detail-card">
+            <div class="detail-icon">💼</div>
+            <h3>Career Opportunities</h3>
+            <p>{{ career_opportunities }}</p>
+        </div>
+
+    </section>
+
+    {% if alternatives %}
+
+        <section class="alternatives-section">
+
+            <div class="section-heading left-heading">
+                <span>OTHER OPTIONS</span>
+                <h2>Alternative courses to explore</h2>
+                <p>
+                    You may also explore these courses based on your stream.
+                </p>
+            </div>
+
+            <div class="alternative-grid">
+
+                {% for course in alternatives %}
+
+                    <div class="alternative-card">
+
+                        <div class="alternative-icon">📚</div>
+
+                        <h3>
+                            {{ course.get("course_name", "Course") }}
+                        </h3>
+
+                        {% if course.get("description") %}
+                            <p>{{ course.get("description") }}</p>
+                        {% endif %}
+
+                        {% if course.get("duration") %}
+                            <small>
+                                Duration: {{ course.get("duration") }}
+                            </small>
+                        {% endif %}
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+    {% endif %}
+
+    <div class="result-actions">
+
+        <a href="{{ url_for('recommend') }}" class="primary-button">
+            Try Again
+        </a>
+
+        <a href="{{ url_for('history') }}" class="secondary-button">
+            View History
+        </a>
+
+        <button onclick="window.print()" class="secondary-button">
+            Print Result
+        </button>
+
+    </div>
+
+</main>
+
+<footer class="footer">
+    <p>© 2026 CoursePath AI. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
